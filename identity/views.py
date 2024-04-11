@@ -60,7 +60,7 @@ class ContactViewSet(viewsets.ViewSet):
                     linkPrecedence = Contact.Precedence.PRIMARY,
                 )
 
-            query = 'SELECT id,email,phoneNumber FROM identity_contact where linkedId_id=%s'
+            query = 'SELECT id,email,phonenumber FROM identity_contact where linkedid_id=%s'
             params = [primary.id]
             related_records = execute(query,params)
 
