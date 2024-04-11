@@ -1,0 +1,137 @@
+[
+  {
+    "phoneNumber": "1234567890",
+    "email": "john@example.com",
+    "linkedId": null,
+    "linkPrecedence": "high",
+    "createdAt": "2023-04-01",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "1234567890",
+    "email": "jane@example.com",
+    "linkedId": null,
+    "linkPrecedence": "medium",
+    "createdAt": "2023-04-02",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "5555555555",
+    "email": "john@example.com",
+    "linkedId": null,
+    "linkPrecedence": "low",
+    "createdAt": "2023-04-03",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "9998887777",
+    "email": "bob@example.com",
+    "linkedId": null,
+    "linkPrecedence": "high",
+    "createdAt": "2023-04-04",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "1112223333",
+    "email": "john@example.com",
+    "linkedId": null,
+    "linkPrecedence": "medium",
+    "createdAt": "2023-04-05",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "7777777777",
+    "email": "peter@example.com",
+    "linkedId": null,
+    "linkPrecedence": "low",
+    "createdAt": "2023-04-06",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "3333333333",
+    "email": "sarah@example.com",
+    "linkedId": null,
+    "linkPrecedence": "high",
+    "createdAt": "2023-04-07",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "7777777777",
+    "email": "mike@example.com",
+    "linkedId": null,
+    "linkPrecedence": "medium",
+    "createdAt": "2023-04-08",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "6666666666",
+    "email": "david@example.com",
+    "linkedId": null,
+    "linkPrecedence": "low",
+    "createdAt": "2023-04-09",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "2222222222",
+    "email": "david@example.com",
+    "linkedId": null,
+    "linkPrecedence": "high",
+    "createdAt": "2023-04-10",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "7777777777",
+    "email": "laura@example.com",
+    "linkedId": null,
+    "linkPrecedence": "medium",
+    "createdAt": "2023-04-11",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "5554443333",
+    "email": "chris@example.com",
+    "linkedId": null,
+    "linkPrecedence": "low",
+    "createdAt": "2023-04-12",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "9999999999",
+    "email": "amy@example.com",
+    "linkedId": null,
+    "linkPrecedence": "high",
+    "createdAt": "2023-04-13",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "7778889999",
+    "email": "ryan@example.com",
+    "linkedId": null,
+    "linkPrecedence": "medium",
+    "createdAt": "2023-04-14",
+    "updatedAt": null,
+    "deleteAt": null
+  },
+  {
+    "phoneNumber": "3332221111",
+    "email": "julia@example.com",
+    "linkedId": null,
+    "linkPrecedence": "low",
+    "createdAt": "2023-04-15",
+    "updatedAt": null,
+    "deleteAt": null
+  }
+]

@@ -1,0 +1,16 @@
+/env
+media/
+
+#ignore migrations
+*/migrations/
+
+#cache
+*.cache/
+*.pyc
+__pycache__/
+*.sqlite3
+*.pyc
+*.pyo
+*.log
+logs/
+*.cache
