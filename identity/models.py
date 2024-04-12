@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 
@@ -15,5 +14,10 @@ class Contact(models.Model):
     linkedId = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
     linkPrecedence = models.CharField(max_length=12,choices=Precedence.choices)
     createdAt = models.DateField(auto_now_add=True)
-    updatedAt = models.DateField(auto_now_add=True)
+    updatedAt = models.DateField(auto_now=True)
     deleteAt = models.DateField(null=True,blank=True)
+
+
+    
+
+

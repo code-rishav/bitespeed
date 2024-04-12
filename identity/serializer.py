@@ -5,7 +5,7 @@ from base.query import execute
 class ContactSerializer(serializers.ModelSerializer):
     primarycontactId = serializers.IntegerField()
     phoneNumbers = serializers.ListField(child=serializers.CharField())
-    secondaryContactIds = serializers.ListField(child=serializers.CharField())
+    secondaryContactIds = serializers.ListField(child=serializers.IntegerField(),allow_null=True,required=False)
     emails = serializers.ListField(child=serializers.EmailField())
     class Meta():
         model = Contact

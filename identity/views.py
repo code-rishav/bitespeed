@@ -18,79 +18,105 @@ class ContactViewSet(viewsets.ViewSet):
 
     
     def create(self,request):
-            data = request.data
+        data = request.data
+        
+        email = data['email']
+        phnNo = data['phonenumber']
 
-            email = data['email']
-            phnNo = data['phonenumber']
+        email_exist = Contact.objects.filter(email=email).exists()
+        phnNo_exist = Contact.objects.filter(phoneNumber=phnNo).exists()
 
-            email_exist = Contact.objects.filter(email=email).exists()
-            phnNo_exist = Contact.objects.filter(phoneNumber=phnNo).exists()
+        emails = list()
+        phoneNumbers = list()
+        secondaryContactIds = list()
+        
+        if phnNo_exist:
+            phn_obj = Contact.objects.filter(
+                phoneNumber=phnNo
+            ).first()
+        if email_exist:
+            email_obj = Contact.objects.filter(
+                email=email,
+            ).first()   
 
-
-            if phnNo_exist:
-                print(Contact.objects.filter(phoneNumber=phnNo))
-                primary = Contact.objects.filter(
-                    phoneNumber=phnNo
-                ).first()
-            elif email_exist:
-                primary = Contact.objects.filter(
-                    email=email,
-                ).first()
-            if (phnNo_exist or email_exist) and primary:
-                if primary.linkPrecedence == Contact.Precedence.PRIMARY:
-                    Contact.objects.create(
-                    email = email,  
-                    phoneNumber = phnNo,
-                    linkPrecedence = Contact.Precedence.SECONDARY,
-                    linkedId = primary
-                )
-                else:
-                    primary = primary.linkedId
-                    Contact.objects.create(
-                    email = email,
-                    phoneNumber = phnNo,
-                    linkPrecedence = Contact.Precedence.SECONDARY,
-                    linkedId = primary
-                    )
-                
-            else:
-                primary = Contact.objects.create(
-                    email = email,
-                    phoneNumber = phnNo,
-                    linkPrecedence = Contact.Precedence.PRIMARY,
-                )
-
-            query = 'SELECT id,email,phonenumber FROM identity_contact where linkedid_id=%s'
-            params = [primary.id]
-            related_records = execute(query,params)
-
-
-            emails = list()
-            contactNumbers = list()
-            secondaryContactIds = list()
-
-            emails.append(primary.email)
-            contactNumbers.append(primary.phoneNumber)
+        if phnNo_exist and email_exist:
+            #check if the same record has been entered
+            if email_obj.id == phn_obj.id:
+                return Response({'message':'same record entered'},status=status.HTTP_204_NO_CONTENT)
+            #if the record has different email and phone number of different record
+            print("if executed")
+            if email_obj.linkPrecedence==Contact.Precedence.PRIMARY:
+                email_created_time = email_obj.createdAt
+            if phn_obj.linkPrecedence==Contact.Precedence.PRIMARY:
+                phn_created_time = phn_obj.createdAt
             
-
-            for r in related_records:
-                secondaryContactIds.append(r[0])
-                if r[1] not in emails:
-                    print(r[1])
-                    emails.append(r[1])
-                if r[2] not in contactNumbers:
-                    contactNumbers.append(r[2])
-
-            data = {
-                'primarycontactId':primary.pk,
-                'emails':emails,
-                'phoneNumbers':contactNumbers,
-                'secondaryContactIds':secondaryContactIds
-            }
-
-            serializer = ContactSerializer(data=data,many=False)
-
-            if serializer.is_valid():
-                return Response(serializer.data,status=status.HTTP_201_CREATED)
+            if email_created_time<phn_created_time:
+                phn_obj.linkPrecedence = Contact.Precedence.SECONDARY
+                phn_obj.linkedId = email_obj
+                phn_obj.save()
+                primary = email_obj
             else:
-                return Response(serializer.errors,status=status.HTTP_204_NO_CONTENT)
+                email_obj.linkPrecedence = Contact.Precedence.SECONDARY
+                email_obj.linkedId = phn_obj          
+                email_obj.save()
+                primary = phn_obj  
+
+        elif phnNo_exist or email_exist:
+            if phnNo_exist:
+                primary = phn_obj
+            else:
+                primary = email_obj
+
+            print("elif executed")
+            if primary.linkPrecedence == Contact.Precedence.PRIMARY:
+                created_object = Contact.objects.create(
+                email = email,  
+                phoneNumber = phnNo,
+                linkPrecedence = Contact.Precedence.SECONDARY,
+                linkedId = primary
+                )
+            else:
+                print("else executed")
+                created_object = Contact.objects.create(
+                email = email,
+                phoneNumber = phnNo,
+                linkPrecedence = Contact.Precedence.SECONDARY,
+                linkedId = primary.linkedId
+                )
+                primary = primary.linkedId
+            
+        #for new record with unrelated phone number or email    
+        else:
+            primary = Contact.objects.create(
+                email = email,
+                phoneNumber = phnNo,
+                linkPrecedence = Contact.Precedence.PRIMARY,
+            )
+
+        emails.append(primary.email)
+        phoneNumbers.append(primary.phoneNumber)
+
+        related_objects = Contact.objects.filter(linkedId=primary.id)
+
+        if related_objects:
+            for r in related_objects:
+                secondaryContactIds.append(r.id)
+                print(r.id)
+                if r.email not in emails:
+                    emails.append(r.email)
+                if r.phoneNumber not in phoneNumbers:
+                    phoneNumbers.append(r.phoneNumber)
+        
+        data = {
+            'primarycontactId':primary.id,
+            'phoneNumbers':phoneNumbers,
+            'emails':emails,
+            'secondaryContactIds':secondaryContactIds
+        }
+
+        serializer = ContactSerializer(data=data)
+
+        if serializer.is_valid():
+            return Response({'contact':serializer.data},status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors,status=status.HTTP_204_NO_CONTENT)

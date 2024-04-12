@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-=&uhd)7w=b29gekbn*=&g$9kggie%n((*zx9ltv=*xgfzp9+i4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['3.75.158.163','3.125.183.140','35.157.117.28','.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1','3.75.158.163','3.125.183.140','35.157.117.28','.onrender.com']
 
 
 # Application definition
@@ -79,9 +79,9 @@ WSGI_APPLICATION = "base.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+'''
 # Retrieve the DATABASE_URL environment variable
-database_url_bytes = os.getenv("DATABASE_URL")
+#database_url_bytes = os.getenv("DATABASE_URL")
 
 # Decode bytes to string if necessary
 if isinstance(database_url_bytes, bytes):
@@ -96,7 +96,19 @@ parsed_database_url = dj_database_url.parse(database_url)
 DATABASES = {
     "default": parsed_database_url
 }
+'''
 
+#DATABASE
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": 'bitespeed',
+        "USER": 'postgres',
+        "PASSWORD": 'Iamrishav@0804',
+        "HOST": 'localhost',
+        "PORT": '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
